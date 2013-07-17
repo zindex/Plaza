@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/jquery.carouFredSel.js"></script>
+    <script src="js/common.js"></script>
+</head>
+
+<body>
+<div class="logo-left">
+    <img src="img/loc-left.png">
+</div>
+<div class="container">
+    <div class="hdr">
+        <div class="case line">
+            <div class="menu line">
+                <a class="menu-link" href="#">МАГАЗИНЫ</a>
+                <a class="menu-link" href="#">развлечения и спорт</a>
+                <a class="menu-link" href="#">Кафе и рестораны</a>
+                <a class="menu-link" href="#">акции и события</a>
+                <a class="menu-link" href="#">блог</a>
+            </div>
+            <div class="logo-img"><img src="img/logo-pic-loc.png" alt=""></div>
+            <a class="logo" href="index.html"><img src="img/logo.png" alt=""></a>
+        </div>
+    </div>
+    <div class="cnt">
+        <div class="case">
+            <div class="location">
+                <div class="cnt__header">
+                    <span class="cnt_logo">
+                        <img src="img/loc.png" alt="">
+                    </span>
+                    Как добраться
+                </div>
+                <h2>Проложить маршрут до ТРЦ «Жемчужная Плаза»:</h2>
+                <div class="location__search-line">
+                    <div class="b-input-i">
+                        <input id="search-add" class="b-input" type="text" placeholder="Ваше местоположение" value="">
+                    </div>
+                    <div class="location__search">
+                        <a id="search-btn" class="btn btn_green" href="#">Проложить<span class="ico ico_type_arrow-wh"></span></a>
+                    </div>
+                </div>
+                <div class="map">
+                    <section class="b-map">
+                        <!-- Этот блок кода нужно вставить в ту часть страницы, где вы хотите разместить карту (начало) -->
+                        <div id="ymaps-map-id_1361787748897998812309" style="width: 100%; height: 413px;"></div>
+                        <script>
+                            function fid_1361787748897998812309(ymaps) {
+                                var map = new ymaps.Map("ymaps-map-id_1361787748897998812309", {
+                                    center: [30.139798,59.848366],
+                                    zoom: 13,
+                                    type: "yandex#map"
+                                });
+                                map.controls
+                                        .add("zoomControl")
+                                        .add("mapTools")
+                                        .add(new ymaps.control.TypeSelector(["yandex#map", "yandex#satellite", "yandex#hybrid", "yandex#publicMap"]));
+
+                                var myPlacemark1 = new ymaps.Placemark([30.139798,59.848366], {
+                                    balloonContent: "196066, Россия, Санкт-Петербург,<br/>Петергофское шоссе , 54",
+                                    iconContent: ""
+                                },{
+                                    iconImageHref: 'http://z-index.com.ua/content/plaza/img/map-icon.png', // картинка иконки
+                                    iconImageSize: [77, 63], // размеры картинки
+                                    iconImageOffset: [-23, -60] // смещение картинки
+                                });
+
+                                //adding placemarks to our map
+                                map.geoObjects.add(myPlacemark1);
+
+                                var prevRoute;
+//
+                                $(function(){
+                                    $("#search-btn").click(function(e){
+                                        prevRoute && map.geoObjects.remove(prevRoute);
+                                        var val = $("#search-add").val();
+
+                                        if(val){
+                                            ymaps.route([
+                                                val,
+                                                myPlacemark1.geometry.getCoordinates()
+                                            ],
+                                                    {
+                                                        // Опции маршрутизатора
+                                                        mapStateAutoApply: true // автоматически позиционировать карту
+                                                    }).then(function (route) {
+                                                        prevRoute = route;
+                                                        map.geoObjects.remove(myPlacemark1);
+
+                                                        route.options.set({ strokeColor: '14b1c3', strokeWidth: 6 });
+                                                        map.geoObjects.add(route);
+
+                                                        var points = route.getWayPoints();
+
+                                                        points.get(0).options.set('preset', 'twirl#redStretchyIcon');
+                                                        points.get(0).properties.set('iconContent', 'А');
+
+                                                        points.get(1).properties.set({
+                                                            balloonContentBody: myPlacemark1.properties.get('balloonContent'),
+                                                            iconContent: myPlacemark1.properties.get('iconContent')
+                                                        });
+
+                                                        points.get(1).options.set({
+                                                            iconImageHref: myPlacemark1.options.get('iconImageHref'),
+                                                            iconImageSize: myPlacemark1.options.get('iconImageSize'),
+                                                            iconImageOffset: myPlacemark1.options.get('iconImageOffset')
+                                                        });
+
+
+                                                    }, function (error) {
+                                                        alert("Возникла ошибка: " + error.message);
+                                                    });
+                                        }
+
+                                        e.preventDefault();
+                                    });
+
+                                    $('#search-add').keyup(function(e){
+                                        if (e.keyCode == 13){
+                                            $("#search-btn").click();
+                                        }
+                                    });
+                                });
+
+                            };
+                        </script>
+                        <script src="http://api-maps.yandex.ru/2.0-stable/?lang=ru-RU&coordorder=longlat&load=package.full&wizard=constructor&onload=fid_1361787748897998812309"></script>
+                        <!-- Этот блок кода нужно вставить в ту часть страницы, где вы хотите разместить карту (конец) -->
+                    </section>
+                </div>
+                <span class="ico ico_type_bus"></span><h2>Бесплатный автобус</h2>
+                <p>От станции метро «Ленинский проспект» до ТРЦ «Жемчужная Плаза» ходит ежедневно, с 10:00 до 22:00 каждые 15 минут.</p>
+                <span class="ico ico_type_bus"></span><h2>Общественный транспорт</h2>
+                <div class="location__add line">
+                    <div class="location__add-block">
+                        <h3><i class="ico ico_type_metro"></i>«Ленинский проспект»</h3>
+                        <div class="location__add-itm line">
+                            <div class="location__add-txt_fst g-grey">Автобусы:</div>
+                            <div class="location__add-txt">18, 145</div>
+                        </div>
+                        <div class="location__add-itm line">
+                            <div class="location__add-txt_fst g-grey">Трамваи:</div>
+                            <div class="location__add-txt"> 56, 52</div>
+                        </div>
+                        <div class="location__add-itm line">
+                            <div class="location__add-txt_fst g-grey">Маршрутки:</div>
+                            <div class="location__add-txt">404, 420, 424,
+                                12, 445, 52</div>
+                        </div>
+                    </div>
+                    <div class="location__add-block">
+                        <h3> <i class="ico ico_type_metro"></i>«Проспект Ветеранов»</h3>
+                        <div class="location__add-itm line">
+                            <div class="location__add-txt_fst location__add-txt_fst g-grey">Автобусы:</div>
+                            <div class="location__add-txt">112, 28</div>
+                        </div>
+                        <div class="location__add-itm line">
+                            <div class="location__add-txt_fst g-grey">Трамваи:</div>
+                            <div class="location__add-txt">60, 36, 41, 52</div>
+                        </div>
+                        <div class="location__add-itm line">
+                            <div class="location__add-txt_fst g-grey">Маршрутки:</div>
+                            <div class="location__add-txt">126, 195, 20,
+                                256, 224</div>
+                        </div>
+                    </div>
+                    <div class="location__add-block">
+                        <h3><i class="ico ico_type_metro"></i>«Автово»</h3>
+                        <div class="location__add-itm line">
+                            <div class="location__add-txt_fst g-grey">Автобусы:</div>
+                            <div class="location__add-txt">  112, 28, 63, 176</div>
+                        </div>
+                        <div class="location__add-itm line">
+                            <div class="location__add-txt_fst g-grey">Трамваи:</div>
+                            <div class="location__add-txt">60, 36</div>
+                        </div>
+                        <div class="location__add-itm line">
+                            <div class="location__add-txt_fst g-grey">Маршрутки:</div>
+                            <div class="location__add-txt">12, 195, 148,
+                                186, 224, 78</div>
+                        </div>
+                    </div>
+                    <div class="location__add-block">
+                        <h3>Из Петергофа</h3>
+                        <div class="location__add-itm line">
+                            <div class="location__add-txt_fst g-grey">Автобусы:</div>
+                            <div class="location__add-txt">18, 145, 28, 129</div>
+                        </div>
+                        <div class="location__add-itm line">
+                            <div class="location__add-txt_fst g-grey">Маршрутки:</div>
+                            <div class="location__add-txt">404, 420, 424,
+                                445, 52, 126, 195,
+                                20, 256, 224</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ftr">
+    <div class="case line">
+        <div class="ftr__item line">
+            <div class="ftr__social">
+                <div class="b-input-i">
+                    <input class="b-input" type="text" placeholder="Подписка на новости" value="">
+                    <a class="ico ico_type_arrow" href="#"></a>
+                </div>
+                <a class="ico ico_type_vk" href="#"></a>
+                <a class="ico ico_type_fb" href="#"></a>
+                <a class="ico ico_type_yt" href="#"></a>
+            </div>
+            <div class="ftr__btn">
+                <a class="ftr__menu ftr__menu_fst" href="#"><span class="ftr__menu_rus">РУС</span></a>
+                <a class="ftr__menu ftr__menu_sec" href="#">ENG</a>
+                <a class="ftr__menu" href="#">О центре</a>
+                <a class="ftr__menu" href="#">как добраться</a>
+                <a class="ftr__menu" href="#">виртуальный план</a>
+            </div>
+            <div class="ftr__time">
+                10:00—22:00
+            </div>
+        </div>
+        <div class="ftr__add line">
+            <p>ТРЦ «Жемчужная Плаза». Петергофское шоссе , 54  I  <a href="mailto:info@pearlplaza.spb.ru">info@pearlplaza.spb.ru</a></p>
+        </div>
+    </div>
+</div>
+<div class="news__popup" style="display:none;">
+    <div class="news__popup_inner">
+        <div class="news__popup-txt">
+            Вы подписаны на новости
+            Жемчужной Плазы
+        </div>
+        <a class="ico ico_type_close" href="#"></a>
+    </div>
+    <div class="popup__bg"></div>
+</div>
+</body>
+</html>
+
+

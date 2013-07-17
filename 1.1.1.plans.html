@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/jquery-ui.css" />
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/raphael-min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/floor-B1.js"></script>
+    <script src="js/floor-1.js"></script>
+    <script src="js/floor-2.js"></script>
+    <script src="js/floor-3.js"></script>
+    <script>
+    // json data
+    var allObjects = [
+        // -1 floor
+        { id: 'B1-1', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' }, // moreLink = goto address when you press "подробнее"
+        { id: 'B1-2', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'B1-3', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'B1-4', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'B1-5', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'B1-6', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'B1-7', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'B1-8', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'B1-9', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        // 1st floor
+        { id: 'F1-1', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-2', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-3', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-4', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-5', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-6', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-7', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-8', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-9', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-10', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-11', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-12', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-13', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-14', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-15', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-16', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-17', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-18', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-19', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-20', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-21', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-22', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-23', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-24', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-25', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-26', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-27', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-28', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-29', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-30', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-31', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-32', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-33', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-34', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-35', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-36', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-37', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-38', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-39', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-40', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-41', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-42', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-43', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-44', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-45', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-46', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-47', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-48', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-49', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-50', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-51', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-52', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-53', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-54', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F1-55', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+
+        // 2nd floor
+        { id: 'F2-1', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-2', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-3', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-4', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-5', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-6', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-7', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-8', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-9', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-10', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-11', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-12', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-13', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-14', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-15', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-16', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-17', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-18', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-19', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-20', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-21', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-22', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-23', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-24', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-25', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-26', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-27', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-28', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-29', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-30', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-31', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-32', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-33', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F2-34', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+
+        // 3rd floor
+        { id: 'F3-1', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-2', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-3', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-4', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-5', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-6', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-7', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-8', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-9', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-10', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-11', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-12', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-13', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-14', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-15', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-16', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-17', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-18', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-19', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-20', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-21', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-22', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-23', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' },
+        { id: 'F3-24', img: 'img/monarch-logo.jpg', link: 'http://monarch.ru/', moreLink: '#' }
+    ];
+    // end json data
+
+    $(function(){
+        // id of JSON object to be active
+        var activeID = getQueryVariable("objID");
+
+        var step = {
+                    current: 0,
+                    min: 0,
+                    max: 2
+                },
+                isAnimated = false,
+                paperWidth = 800, //$('#map-plan').width()
+                paperHeight = paperWidth/2 > 420 ? paperWidth/2 : 420,
+                objectFillPattern = 'url(img/object-fill-big.png)';
+
+        var r = Raphael('map-plan', paperWidth, paperHeight),
+                animateSpeed = 0,
+                objFillColor = '#3fb8ca',
+                objSet = r.set();
+        r.customAttributes.type = function (val) { return val; };
+        r.customAttributes.tip = function (val) { return val; };
+        r.customAttributes.objID = function (val) { return val; };
+
+        $(window).resize(function(){
+            paperWidth = $('#map-plan').width();
+            paperHeight = paperWidth/2 > 420 ? paperWidth/2 : 420;
+            step = {
+                current: 0,
+                min: 0,
+                max: 2
+            };
+            r.setSize(paperWidth, paperHeight);
+            r.animateViewBox( 0, 0, r.width, r.height, 300, '<>', function(){
+                isAnimated = false;
+            } );
+        });
+
+        var floorNum = function(){
+            var result = 0;
+            if (activeID){
+                switch (activeID.substr(0,2)){
+                    case 'B1':
+                        result = 0;
+                        break;
+                    case 'F1':
+                        result = 1;
+                        break;
+                    case 'F2':
+                        result = 2;
+                        break;
+                    case 'F3':
+                        result = 3;
+                        break;
+                }
+            }
+
+            return result;
+        },
+            num = floorNum();
+
+        $('.floor[data-val="' +  num +'"]').addClass('floor_selected');
+
+        var slider = $("#slider-vertical" ).slider({
+            orientation: "vertical",
+            range: "min",
+            min: 0,
+            max: 3,
+            value: num,
+            slide: function(event, ui) {
+                $('.floor').each(function(){
+                    $(this).removeClass('floor_selected');
+
+                    if($(this).attr('data-val') == ui.value){
+                        $(this).addClass('floor_selected');
+                    }
+                });
+            },
+            change: function(event, ui){
+                selectFloor(ui.value);
+
+                $('.floor').each(function(){
+                    $(this).removeClass('floor_selected');
+
+                    if($(this).attr('data-val') == ui.value){
+                        $(this).addClass('floor_selected');
+                    }
+                });
+            }
+        });
+        $('.floor').click(function(e){
+            var dataValue = $(this).attr('data-val');
+            $(this).siblings('.floor').removeClass('floor_selected');
+            $(this).addClass('floor_selected');
+
+            $('#slider-vertical').slider({
+                value: dataValue
+            });
+            $('#tip').hide();
+
+            e.preventDefault();
+        });
+
+        $('#zoom-in').click(function(e){
+            if (step.current < step.max && !isAnimated){
+                step.current++;
+                r.width = r.width*.8;
+                r.height = r.height*.8;
+                r.animateViewBox( 0, 0, r.width, r.height, 300, '<>', function(){
+                    isAnimated = false;
+                } );
+            }
+            if (step.current < step.max) { isAnimated = true }
+
+            e.preventDefault();
+        });
+        $('#zoom-out').click(function(e){
+            if (step.current > step.min && !isAnimated){
+                step.current--;
+                r.width = r.width*1.25;
+                r.height = r.height*1.25;
+                r.animateViewBox( 0, 0, r.width, r.height, 300, '<>', function(){
+                    isAnimated = false;
+                } );
+            }
+            if (step.current > step.min) { isAnimated = true }
+
+            e.preventDefault();
+        });
+
+        selectFloor(num);
+
+        function drawFloor(data, makeActiveByID){
+            $('#map-plan').animate({
+                opacity: 0
+            },300,function(){
+            r.clear();
+
+            var isVisible = false;
+
+            $('#map-plan').css({top:0+'px', left:0+'px'});
+            step.current = 0;
+            r.setViewBox(0,0, paperWidth, paperHeight);
+            r.width = paperWidth;
+            r.height = paperHeight;
+
+            $.each( data, function(k, v){
+                var that = this;
+
+                that.setupInteraction = function(item, tipObj){
+                    var tip = $('#tip'),
+                        bbox;
+
+                    item.hover(function(){
+                        tip.hide();
+                        isVisible = false;
+                        objSet.attr({
+                            'fill': objFillColor
+                        });
+                        item.attr({
+                            'fill': objectFillPattern
+                        });
+                    },function(){
+                        if (!isVisible){
+                            item.attr({
+                                'fill': objFillColor
+                            });
+                        }
+                    });
+
+                    item.click(function(e){
+                        if (e.shiftKey){
+                            console.log('this objID is : ' + item.attr("objID"));
+                        }
+                        if(!isVisible){
+                            if (tipObj){
+                                $('.tip img').attr('src', tipObj.img);
+                                $('.tip__link').text(tipObj.link).attr('href', tipObj.link);
+                                $('.tip__more a').attr('href', tipObj.moreLink);
+
+                                bbox = item.getBBox();
+                                tip.show().css({
+                                    top: (bbox.y + bbox.height/2) * paperWidth/ r.width,
+                                    left: (bbox.x + bbox.width/2) * paperWidth/ r.width,
+                                    margin: -(tip.height() *1.5) + 'px 0 0 ' + -(tip.width()+24)/2 + 'px'
+                                });
+                            }
+
+                            objSet.attr({
+                                'fill': objFillColor
+                            });
+                            item.attr({
+                                'fill': objectFillPattern
+                            });
+
+                            isVisible = true;
+                        } else {
+                            tip.hide();
+                            isVisible = false;
+                        }
+
+                    });
+                };
+
+                if (that.type == 'decor'){
+                    var decor = r.set();
+                    for (var i=0; i <that.path.length; i++){
+                        decor.push(r.path(that.path[i]));
+                    }
+                    decor.attr({
+                        'fill': '#9e9e9f',
+                        'fill-opacity': 1,
+                        'stroke-width': 0
+                    });
+                }
+                if (that.type == 'building'){
+                    var obj = r.path(that.path);
+                    obj.attr({
+                        'fill': objFillColor,
+                        'fill-opacity': 1,
+                        'stroke-width': 0,
+                        'cursor': 'pointer',
+                        'objID': that.objID
+                    });
+
+                    $.each(allObjects,function(k,v){
+                        if (allObjects[k].id == that.objID) {
+                            obj.attr({
+                                tip: {
+                                    img : allObjects[k].img,
+                                    link : allObjects[k].link,
+                                    moreLink : allObjects[k].moreLink
+                                }
+                            });
+                        }
+                    });
+
+                    if ($.isEmptyObject(obj.attrs.tip)){
+                        obj.attrs.tip = false;
+                    }
+
+                    that.setupInteraction(obj, obj.attrs.tip);
+                    objSet.push(obj);
+                }
+
+                if (that.type == 'background'){
+                    var bg = r.path(that.path);
+                    bg.attr({
+                        'fill': '#eef0f1',
+                        'fill-opacity': 1,
+                        'stroke-width': 0
+                    });
+                }
+                if (that.type == 'mask'){
+                    var mask = r.image("img/mask.png", 224, 114, 314, 299);
+                    mask.mousedown(function(e){
+                        if (e.preventDefault) {e.preventDefault()}
+                    });
+                }
+                if (that.type == 'icon'){
+                    var ico = r.image(that.img, that.x, that.y, that.width, that.height);
+                    ico.attr({
+                        'opacity': .4,
+                        'cursor': 'pointer'
+                    });
+                    ico.text = that.text;
+
+                    ico.hover(function(){
+                        var tip = $('#tip-info'),
+                            bbox = this.getBBox();
+
+                        $('.tip__text',tip).text(this.text);
+                        tip.show().css({
+                            top: (bbox.y - tip.height()) * paperWidth/ r.width,
+                            left: bbox.x * paperWidth/ r.width,
+                            margin: -tip.height() * 1.8 + 'px 0 0 ' + -tip.width()/2 + 'px'
+                        });
+
+                        this.attr({
+                            'opacity': 1
+                        });
+                    },function(){
+                        $('#tip-info').hide();
+                        this.attr({
+                            'opacity': .4
+                        });
+                    });
+                    ico.mousedown(function(e){
+                        if (e.preventDefault) {e.preventDefault()}
+                    });
+                }
+            });
+
+            makeElementActive(activeID);
+            activeID = null;
+
+            $('#map-plan').animate({
+                opacity: 1
+            },300);
+        });
+    }
+
+    //item to make active
+    function makeElementActive(elemID){
+        if (elemID){
+            objSet.forEach(function(el){
+                if (el.attr("objID") == elemID){
+                    el.events[0].f();
+
+                    $('.tip img').attr('src', el.attrs.tip.img);
+                    $('.tip__link').text(el.attrs.tip.link).attr('href', el.attrs.tip.link);
+                    $('.tip__more a').attr('href', el.attrs.tip.moreLink);
+
+                    var bbox = el.getBBox(),
+                            tip = $('#tip');
+                    tip.show().css({
+                        top: (bbox.y + bbox.height/2) * paperWidth/ r.width,
+                        left: (bbox.x + bbox.width/2) * paperWidth/ r.width,
+                        margin: -(tip.height() * 1.5) + 'px 0 0 ' + -(tip.width()+24)/2 + 'px'
+                    });
+                }
+            });
+        }
+    }
+
+    function selectFloor(num){
+        switch (num){
+            case 0:
+                drawFloor(plans0);
+                break;
+            case 1:
+                drawFloor(plans1);
+                break;
+            case 2:
+                drawFloor(plans2);
+                break;
+            case 3:
+                drawFloor(plans3);
+                break;
+        }
+    }
+
+    var map = new Map($('#map-plan'), r, objSet, objFillColor);
+});
+
+    Raphael.fn.animateViewBox = function animateViewBox( x, y, w, h, duration, easing_function, callback ){
+        var cx = this._viewBox ? this._viewBox[0] : 0,
+                dx = x - cx,
+                cy = this._viewBox ? this._viewBox[1] : 0,
+                dy = y - cy,
+                cw = this._viewBox ? this._viewBox[2] : this.width,
+                dw = w - cw,
+                ch = this._viewBox ? this._viewBox[3] : this.height,
+                dh = h - ch,
+                self = this;
+        easing_function = easing_function || "linear";
+
+        var interval = 25,
+            steps = duration / interval,
+            current_step = 0,
+            easing_formula = Raphael.easing_formulas[easing_function];
+
+        var intervalID = setInterval( function() {
+            var ratio = current_step / steps;
+            self.setViewBox( cx + dx * easing_formula( ratio ),
+                cy + dy * easing_formula( ratio ),
+                cw + dw * easing_formula( ratio ),
+                ch + dh * easing_formula( ratio ), false );
+            if ( current_step++ >= steps ) {
+                clearInterval( intervalID );
+                callback && callback();
+            }
+        }, interval );
+    };
+
+    function Map(viewingBox, raphael, objSet, objFillColor) {
+        var m = this;
+        m.viewingBox = viewingBox;
+        m.mouseDown = false;
+        m.lastPosition = {
+            x : 0,
+            y : 0
+        };
+
+        m.viewingBox = viewingBox.parent('.map-i');
+        m.innerMap = viewingBox;
+
+        m.tip = $(".tip");
+
+        m.viewingBox.mousedown( function(event) {
+            m.mouseDown = true;
+            m.lastPosition.x = event.pageX;
+            m.lastPosition.y = event.pageY;
+        });
+
+        m.viewingBox.mouseup( function(event) {
+            m.mouseDown = false;
+        });
+
+        m.viewingBox.mouseleave( function(event) {
+            m.mouseDown = false;
+        });
+
+        m.viewingBox.mousemove( function(event) {
+            m.allSet = raphael.set();
+            m.objSet = objSet;
+            raphael.forEach(function (el){
+                m.allSet.push(el);
+            });
+            if(m.mouseDown) {
+                var bbox = m.allSet.getBBox();
+                // Find the change in position since our last move
+                var dx = event.pageX - m.lastPosition.x;
+                var dy = event.pageY - m.lastPosition.y;
+
+                // Find the new position of the map
+                bbox.x += dx;
+                bbox.y += dy;
+
+                dx = bbox.x > -bbox.width/2 + 800 ? 0 : dx;
+                dy = bbox.y > -bbox.height/2 + 500 ? 0 : dy;
+                dx = bbox.x < -bbox.width/2 ? 0 : dx;
+                dy = bbox.y < -bbox.height/2 ? 0 : dy;
+
+                // Hiding tips, painting objects into default fill color
+                m.tip.hide();
+                m.objSet.attr({fill: objFillColor});
+
+                // Translating all objects in svg
+                m.allSet.translate(dx, dy);
+
+                m.lastPosition.x = event.pageX;
+                m.lastPosition.y = event.pageY;
+
+                event.preventDefault();
+            }
+        });
+    }
+
+    function getQueryVariable(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
+</script>
+
+</head>
+
+<body>
+<div class="logo-left">
+    <img src="img/pl-left.png">
+</div>
+<div class="container">
+	<div class="hdr">
+        <div class="case line">
+            <div class="menu line">
+                <a class="menu-link" href="#">МАГАЗИНЫ</a>
+                <a class="menu-link" href="#">развлечения и спорт</a>
+                <a class="menu-link" href="#">Кафе и рестораны</a>
+                <a class="menu-link" href="#">акции и события</a>
+                <a class="menu-link" href="#">блог</a>
+            </div>
+            <div class="logo-img"><img src="img/logo-pic-pl.png" alt=""></div>
+            <a class="logo" href="index.html"><img src="img/logo.png" alt=""></a>
+        </div>
+    </div>
+    <div class="cnt">
+        <div class="case">
+            <div class="plans">
+                <div class="shop-list-head line">
+                    <a class="cnt__header" href="#">
+                        <span class="cnt_logo">
+                            <img src="img/virt-plan-big.png" alt="">
+                        </span>
+                        Виртуальный план <a href="#" class="ico ico_type_arrow-big-active"></a>
+                    </a>
+                    <a class="virtual-plan g-bold" href="#">СПИСОК МАГАЗИНОВ <span class="virtual-plan-log"><img src="img/shop-list.png" alt=""></span>
+                    </a>
+                </div>
+
+                <div class="plans__body line">
+                    <div class="plans__left">
+                        <a id="zoom-in" href="#"><img src="img/plus.png" alt=""/></a>
+                        <a id="zoom-out" href="#"><img src="img/minus.png" alt=""/></a>
+
+                        <div class="plans__control">
+                            <div class="floor-i">
+                                <a href="#" class="floor" data-val="3">3</a>
+                                <a href="#" class="floor" data-val="2">2</a>
+                                <a href="#" class="floor" data-val="1">1</a>
+                                <a href="#" class="floor" data-val="0">-1</a>
+                            </div>
+                            <div id="slider-vertical" style="height:240px;">
+                                <div class="ui-slider__after"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="plans__right">
+                        <div class="map-i">
+                            <div id="map-plan">
+                                <div id="tip" class="tip">
+                                    <a href="#" class="tip__left"><img src="img/monarch-logo.jpg" alt=""/></a>
+                                    <div class="tip__data">
+                                        <a class="tip__link" href="#"></a><br />
+                                        <span class="tip__more"><a href="#">подробнее</a></span>
+                                    </div>
+                                    <i class="tip__arrow"></i>
+                                </div>
+                                <div id="tip-info" class="tip tip_info">
+                                    <span class="tip__text">Тестовый текст</span>
+                                    <i class="tip__arrow"></i>
+                                </div>
+                            </div>
+
+                            <div class="map-text map-text_top">Матисов канал</div>
+                            <div class="map-text map-text_bottom">Петергофское шоссе</div>
+                            <div class="map-text map-text_right">ул. Адмирала Трибуца</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ftr">
+    <div class="case line">
+        <div class="ftr__item line">
+            <div class="ftr__social">
+                <div class="b-input-i">
+                    <input class="b-input" type="text" placeholder="Подписка на новости" value="">
+                    <a class="ico ico_type_arrow" href="#"></a>
+                </div>
+                <a class="ico ico_type_vk" href="#"></a>
+                <a class="ico ico_type_fb" href="#"></a>
+                <a class="ico ico_type_yt" href="#"></a>
+            </div>
+            <div class="ftr__btn">
+                <a class="ftr__menu ftr__menu_fst" href="#"><span class="ftr__menu_rus">РУС</span></a>
+                <a class="ftr__menu ftr__menu_sec" href="#">ENG</a>
+                <a class="ftr__menu" href="#">О центре</a>
+                <a class="ftr__menu" href="#">как добраться</a>
+                <a class="ftr__menu" href="#">виртуальный план</a>
+            </div>
+            <div class="ftr__time">
+                10:00—22:00
+            </div>
+        </div>
+        <div class="ftr__add line">
+            <p>ТРЦ «Жемчужная Плаза». Петергофское шоссе , 54  I  <a href="mailto:info@pearlplaza.spb.ru">info@pearlplaza.spb.ru</a></p>
+        </div>
+    </div>
+</div>
+<div class="news__popup" style="display:none;">
+    <div class="news__popup_inner">
+        <div class="news__popup-txt">
+            Вы подписаны на новости
+            Жемчужной Плазы
+        </div>
+        <a class="ico ico_type_close" href="#"></a>
+    </div>
+    <div class="popup__bg"></div>
+</div>
+</body>
+</html>

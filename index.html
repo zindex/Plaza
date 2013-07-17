@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+     <!--Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/jquery.carouFredSel.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/raphael-min.js"></script>
+    <script src="js/pattern.js"></script>
+    <script src="js/modernizr.custom.82257.js"></script>
+    <script>
+        $(function(){
+            if(!Modernizr.svg){
+                $('#pattern').addClass('pattern_no-svg');
+            }
+
+            var r = Raphael('pattern', '100%', 390),
+                    animateSpeed = 0,
+                    fillColors = ['#bf4371','#e59f8a','#796399','#0aadbf','#009bd9','#eebf33'],
+                    arr = [];
+            r.customAttributes.isAddPath = function (val) {
+                return val;
+            };
+
+            $.each( icons, function(k, v){
+                var that = this;
+
+                that.setupInteraction = function(item){
+                    item.hover(function(e){
+                        var randNum = getRandomInt(0,fillColors.length -1);
+                        //console.log(item.attr('fill'))
+                        //if (fillColors[randNum] == $(this).attr('fill') )
+                        if (item[0].attr('fill') == fillColors[randNum]){
+                            randNum < fillColors.length -1 ? randNum += 1 : randNum -= 1;
+                        }
+                        for (i=0; i < item.length; i++){
+                            item[i].animate({
+                                'fill': item[i].attr('isAddPath')? '#fff': fillColors[randNum],
+                                'stroke-width': 0
+                            },animateSpeed);
+                        }
+
+                        e.preventDefault();
+                    },function(){
+
+                    });
+                };
+
+                var obj,
+                    objCover,
+                    objSet = r.set();
+                for (i=0; i <that.path.length; i++){
+                    obj =  objSet.push(r.path(that.path[i]));
+                }
+                obj.attr({
+                    'fill': '#fff',
+                    'fill-opacity': 1,
+                    'stroke-width': 1,
+                    'stroke-color': '#000',
+                    'stroke-linejoin': 'miter',
+                    'stroke-location': 'inset'
+                });
+
+                if (that.addPath){
+                    objCover = r.path(that.addPath);
+                    objCover.attr({
+                        'isAddPath': true,
+                        'fill': '#fff',
+                        'fill-opacity': 1,
+                        'stroke-width': 1,
+                        'stroke-color': '#000',
+                        'stroke-linejoin': 'miter',
+                        'stroke-location': 'inset'
+                    });
+                    objSet.push(objCover);
+                }
+                if (that.rotate){
+                    obj.rotate(that.rotate);
+                    objCover.rotate(that.rotate);
+                }
+
+                var objSet2 = objSet.clone().translate(930,0);
+                that.setupInteraction(objSet);
+                that.setupInteraction(objSet2);
+            });
+        });
+
+        function getRandomInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+    </script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.countdown-ru.js"></script>
+    <script>
+        $(function(){
+            var newYear = new Date(2013, 12-1, 30); // year, month -1, date
+            $('#count-down').countdown({
+                until: newYear,
+                format: 'd',
+                layout: '{dn} {dl}',
+                timezone: +4
+            })
+        });
+    </script>
+</head>
+
+<body>
+<div class="container">
+	<div class="hdr">
+        <div class="case line">
+            <div class="menu line">
+                <a class="menu-link" href="#">МАГАЗИНЫ</a>
+                <a class="menu-link" href="#">развлечения и спорт</a>
+                <a class="menu-link" href="#">Кафе и рестораны</a>
+                <a class="menu-link" href="#">акции и события</a>
+                <a class="menu-link" href="#">блог</a>
+            </div>
+            <div class="logo-img"><img src="img/logo-pic.png" alt=""></div>
+            <a class="logo logo_main" href="index.html"><img src="img/logo.png" alt=""></a>
+        </div>
+    </div>
+    <div class="slider__main">
+        <div class="case line">
+            <div id="slider" class="line">
+                <div class="slider__block slider__block_green">
+                    <p class="slider__block-left">
+                        <span class="slider__block-inner">
+                            <span class="slider__block-ttl">Дефиле на Неве</span>
+                            <span class="slider__block-txt">
+                                — главное модное событие
+                            Санкт-Петербурга
+                            </span>
+                        </span>
+                    </p>
+                    <p class="slider__block-pic">
+                        <img src="img/ban1.jpg" alt="">
+                    </p>
+                </div>
+                <div class="slider__block slider__block_purple">
+                    <p class="slider__block-left">
+                        <span class="slider__block-inner">
+                             <span class="slider__block-ttl slider__block-ttl_bolder">Новый год</span>
+                             <span class="slider__block-txt slider__block-txt_size">в Жемчужной Плазе</span>
+                             <span class="slider__block-txt">с  21.12.2012  по  15.01.2013</span>
+                        </span>
+                    </p>
+                    <p class="slider__block-pic">
+                        <img src="img/ban2.jpg" alt="">
+                    </p>
+                </div>
+                <a href="#" class="slider__block slider__block_orange">
+                    <p class="slider__block-left">
+                        <span class="slider__block-inner">
+                            <span class="slider__block-ttl">Дефиле на Неве</span>
+                            <span class="slider__block-txt">
+                                — главное модное событие
+                            Санкт-Петербурга
+                            </span>
+                        </span>
+                    </p>
+                    <p class="slider__block-pic">
+                        <img src="img/ban1.jpg" alt="">
+                    </p>
+                </a>
+                <a href="#" class="slider__block slider__block_violet">
+                    <p class="slider__block-left">
+                       <span class="slider__block-inner">
+                            <span class="slider__block-ttl">Дефиле на Неве</span>
+                            <span class="slider__block-txt">
+                                — главное модное событие
+                            Санкт-Петербурга
+                            </span>
+                        </span>
+                    </p>
+                    <p class="slider__block-pic">
+                        <img src="img/ban1.jpg" alt="">
+                    </p>
+                </a>
+                <a href="#" class="slider__block slider__block_blue">
+                    <p class="slider__block-left">
+                        <span class="slider__block-inner">
+                            <span class="slider__block-ttl">Дефиле на Неве</span>
+                            <span class="slider__block-txt">
+                                — главное модное событие
+                            Санкт-Петербурга
+                            </span>
+                        </span>
+                    </p>
+                    <p class="slider__block-pic">
+                        <img src="img/ban1.jpg" alt="">
+                    </p>
+                </a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div class="cnt cnt_main">
+        <div class="case">
+            <div id="pattern" class="pattern">
+                <div class="count-down">
+                    <img src="img/logo-big.png" alt="Жемчужная Плаза"/>
+                    <span class="count-down__text"><span id="count-down">156 дней</span> до открытия</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ftr ftr_main">
+        <div class="case line">
+            <div class="ftr__item line">
+                <div class="ftr__social">
+                    <div class="b-input-i">
+                        <input class="b-input" type="text" placeholder="Подписка на новости" value="">
+                        <a class="ico ico_type_arrow" href="#"></a>
+                    </div>
+                    <a class="ico ico_type_vk" href="#"></a>
+                    <a class="ico ico_type_fb" href="#"></a>
+                    <a class="ico ico_type_yt" href="#"></a>
+                </div>
+                <div class="ftr__btn">
+                    <a class="ftr__menu ftr__menu_fst" href="#"><span class="ftr__menu_rus">РУС</span></a>
+                    <a class="ftr__menu ftr__menu_sec" href="#">ENG</a>
+                    <a class="ftr__menu" href="#">О центре</a>
+                    <a class="ftr__menu" href="#">как добраться</a>
+                    <a class="ftr__menu" href="#">виртуальный план</a>
+                </div>
+                <div class="ftr__time">
+                    10:00—22:00
+                </div>
+            </div>
+            <div class="ftr__add line">
+                <p>ТРЦ «Жемчужная Плаза». Петергофское шоссе , 54  I  <a href="mailto:info@pearlplaza.spb.ru">info@pearlplaza.spb.ru</a></p>
+            </div>
+            <div class="ftr__info line">
+                <div class="ftr__info-txt">
+                    <a class="ftr__info-txt-head ftr__info-txt-head-active" href="#">Торгово-развлекательный центр «Жемчужная Плаза»<span class="ico ico_type_arrow"></span></a>
+                    <div class="ftr__info-block">
+                        <p class="ftr__info-txt_fst">На сайте ТРК «Жемчужная Плаза» вы найдете всю необходимую информацию о дисконт магазинах, узнаете последние новости об акциях.</p>
+                        <p>ТРК «Жемчужная Плаза» — это один из самых крупных дисконтных центров Петербурга, где представлены магазины известных зарубежных и российских торговых марок. Здесь можно приобрести стильные вещи знаменитых брендов по доступным ценам с максимальными скидками.</p>
+                    </div>
+                </div>
+                <div class="ftr__info-txt">
+                    <a class="ftr__info-txt-head" href="#">Стильные вещи знаменитых брендов по доступным ценам<span class="ico ico_type_arrow"></span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="news__popup" style="display:none;">
+    <div class="news__popup_inner">
+        <div class="news__popup-txt">
+            Вы подписаны на новости
+            Жемчужной Плазы
+        </div>
+        <a class="ico ico_type_close" href="#"></a>
+    </div>
+    <div class="popup__bg"></div>
+</div>
+
+</body>
+</html>
